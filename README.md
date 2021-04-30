@@ -35,3 +35,12 @@ This project has 3 main goals :
     - [ ] Double Tap
 * [ ] Tiles caching using the file system
 * [ ] Display user location in realtime (via Android & iOS platform calls)
+
+## References
+
+- https://pub.dev/packages/provider
+- https://github.com/xclud/flutter_map
+- https://github.com/java-james/flutter_dotenv
+- https://www.gr-infos.com/
+- https://www.refuges.info/
+- https://www.thunderforest.com/
