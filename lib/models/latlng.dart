@@ -19,5 +19,5 @@ class LatLng {
   bool operator ==(Object other) => other is LatLng && latitude == other.latitude && longitude == other.longitude;
 
   @override
-  String toString() => 'LatLng($latitude, $longitude)';
+  String toString() => 'LatLng(${latitude.toStringAsFixed(3)}, ${longitude.toStringAsFixed(3)})';
 }
