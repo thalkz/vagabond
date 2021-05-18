@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:vagabond/models/latlng.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:vagabond/utils/projection.dart';
 import 'package:flutter_test/flutter_test.dart';
 

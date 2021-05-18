@@ -1,4 +1,4 @@
-import 'package:vagabond/models/latlng.dart';
+import 'package:latlong2/latlong.dart';
 
 class Shelter {
   final String id;

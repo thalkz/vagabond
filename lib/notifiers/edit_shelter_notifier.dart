@@ -1,4 +1,4 @@
-import 'package:vagabond/models/latlng.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:vagabond/models/shelter.dart';
 import 'package:vagabond/utils/api.dart';
 import 'package:vagabond/utils/logger.dart';
@@ -25,16 +25,16 @@ class EditShelterNotifier extends ChangeNotifier {
   bool get loading => _loading;
 
   Shelter _readShelter() {
+    final latitude = double.tryParse(latitudeController.value.text) ?? 0.0;
+    final longitude = double.tryParse(latitudeController.value.text) ?? 0.0;
+
     return Shelter(
       id: shelterId ?? '',
       createdAt: DateTime.now(),
       name: nameController.value.text,
       description: descriptionController.value.text,
-      opened: true, // TODO
-      location: LatLng.fromJson({
-        'latitude': latitudeController.value.text,
-        'longitude': longitudeController.value.text,
-      }),
+      opened: true, // TODO: Show opened or not
+      location: LatLng(latitude, longitude),
     );
   }
 

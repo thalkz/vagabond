@@ -1,64 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:vagabond/map/map_controller.dart';
-import 'package:vagabond/map/tiles_layer.dart';
-
-import '../utils/env.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
+import 'package:vagabond/utils/env.dart';
 
 class MapWidget extends StatefulWidget {
-  const MapWidget({required this.controller});
-
-  final MapController controller;
-
   @override
   _MapWidgetState createState() => _MapWidgetState();
 }
 
 class _MapWidgetState extends State<MapWidget> {
-  void _onDoubleTap() {
-    widget.controller.zoom += 0.5;
-  }
-
-  late Offset _dragStart;
-  double _scaleStart = 1.0;
-
-  void _onScaleStart(ScaleStartDetails details) {
-    _dragStart = details.focalPoint;
-    _scaleStart = 1.0;
-  }
-
-  void _onScaleUpdate(ScaleUpdateDetails details) {
-    final scaleDiff = details.scale - _scaleStart;
-    _scaleStart = details.scale;
-
-    if (scaleDiff > 0) {
-      widget.controller.zoom += 0.05;
-    } else if (scaleDiff < 0) {
-      widget.controller.zoom -= 0.02;
-    } else {
-      final now = details.focalPoint;
-      final diff = now - _dragStart;
-      _dragStart = now;
-      widget.controller.drag(diff.dx, diff.dy);
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onDoubleTap: _onDoubleTap,
-      onScaleStart: _onScaleStart,
-      onScaleUpdate: _onScaleUpdate,
-      onScaleEnd: (details) {
-        print("Location: ${widget.controller.center.latitude}, ${widget.controller.center.longitude}");
-      },
-      child: Stack(
-        children: [
-          TilesLayer(
-            controller: widget.controller,
-            urlBuilder: (x, y, z) => 'https://tile.thunderforest.com/outdoors/$z/$x/$y.png?apikey=$thunderforestKey',
-          ),
-        ],
+    return FlutterMap(
+      options: MapOptions(
+        center: LatLng(51.5, -0.09),
+        zoom: 13.0,
       ),
+      layers: [
+        TileLayerOptions(
+          urlTemplate: "https://tile.thunderforest.com/{s}/{z}/{x}/{y}.jpg80?apikey=$thunderforestKey",
+          subdomains: ['outdoors'],
+          retinaMode: true,
+        ),
+        MarkerLayerOptions(
+          markers: [
+            Marker(
+              width: 80.0,
+              height: 80.0,
+              point: LatLng(51.5, -0.09),
+              builder: (ctx) => Container(
+                child: FlutterLogo(),
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
